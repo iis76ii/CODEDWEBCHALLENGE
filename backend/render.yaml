@@ -1,0 +1,14 @@
+services:
+  - type: web
+    name: learnr-backend
+    env: node
+    buildCommand: npm install
+    startCommand: node server.js
+    healthCheckPath: /ping
+    envVars:
+      - key: JWT_SECRET
+        generateValue: true
+      - key: OPENROUTER_API_KEY
+        sync: false
+      - key: FRONTEND_URL
+        value: https://codedwebsite.vercel.app
