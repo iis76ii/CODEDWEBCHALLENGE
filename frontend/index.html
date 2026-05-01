@@ -760,6 +760,16 @@
       flex-shrink: 0;
     }
     .ai-send-btn:hover { background: var(--accent2); }
+    .theme-toggle {
+  display: block; width: calc(100% - 24px); margin: 0 12px 12px;
+  padding: 8px; border: 1px solid var(--border2); border-radius: var(--radius-sm);
+  background: none; font-family: 'Syne', sans-serif; font-size: 12px;
+  font-weight: 600; color: var(--text2); cursor: pointer; transition: all 0.15s;
+}
+.theme-toggle:hover { background: var(--surface2); color: var(--text); }
+body.light { --bg: #f5f4f0; --surface: #ffffff; --surface2: #f0ede6; --surface3: #e8e4dc;
+  --border: rgba(0,0,0,0.08); --border2: rgba(0,0,0,0.15); --text: #1a1a18;
+  --text2: #5f5e5a; --text3: #888780; }
   </style>
 </head>
 <body>
@@ -850,6 +860,7 @@
         <span class="nav-icon">◎</span> AI Tutor
       </button>
     </nav>
+    <button class="theme-toggle" id="themeToggle" onclick="toggleTheme()">☀️ Light Mode</button>
     <div class="sidebar-footer">
       <div class="avatar-row">
         <div class="avatar" id="avatarInitial">A</div>
@@ -1626,6 +1637,20 @@
     }
     showToast('Goal deleted ✓');
   }
+  // ── Theme ──
+function toggleTheme() {
+  const isLight = document.body.classList.toggle('light');
+  localStorage.setItem('learnr_theme', isLight ? 'light' : 'dark');
+  document.getElementById('themeToggle').textContent = isLight ? '🌙 Dark Mode' : '☀️ Light Mode';
+}
+// Apply saved theme on load
+if (localStorage.getItem('learnr_theme') === 'light') {
+  document.body.classList.add('light');
+  document.addEventListener('DOMContentLoaded', () => {
+    const btn = document.getElementById('themeToggle');
+    if (btn) btn.textContent = '🌙 Dark Mode';
+  });
+}
 
   // ── Toast ──
   function showToast(msg) {
